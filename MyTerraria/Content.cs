@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MyTerraria {
     class Content {
-        public const string CONTENT_DIR = "..\\Content\\Textures\\";
+        public const string CONTENT_DIR = "..\\Content\\";
 
         public static Texture textTile0;
 
         public static void Load() {
-            textTile0 = new Texture(CONTENT_DIR + "Tiles_0.png");
+            textTile0 = new Texture(CONTENT_DIR + "Textures\\Tiles_0.png");
 
         }
     }

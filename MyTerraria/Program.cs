@@ -17,6 +17,7 @@ namespace MyTerraria {
             win.SetVerticalSyncEnabled(true);
 
             win.Closed += Win_Closed;
+            win.Resized += Win_Resized;
 
             //Загрузка контента
             Content.Load();
@@ -34,6 +35,10 @@ namespace MyTerraria {
 
                 win.Display();
             }
+        }
+
+        private static void Win_Resized(object sender, SFML.Window.SizeEventArgs e) {
+            win.SetView(new View(new FloatRect(0, 0, e.Width, e.Height)));
         }
 
         private static void Win_Closed(object sender, EventArgs e) {

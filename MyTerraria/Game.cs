@@ -16,6 +16,7 @@ namespace MyTerraria {
         }
 
         public void Draw() {
+            Program.Window.Draw(world);
         }
     }
 }

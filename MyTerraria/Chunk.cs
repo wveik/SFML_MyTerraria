@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,22 @@ namespace MyTerraria {
     class Chunk : Transformable, Drawable {
         //Кол-во тайлов в одном чанке по ширине и высоте
         public const int CHUNK_SIZE = 25;
-        Tile[][] tiles;
+        private Tile[][] tiles;
+        private Vector2i chunkPos;
 
-        public Chunk() {
+        public Chunk(Vector2i _chunkPos) {
+            this.chunkPos = _chunkPos;
+            Position = new Vector2f(chunkPos.X * CHUNK_SIZE * Tile.TILE_SIZE, chunkPos.Y * CHUNK_SIZE * Tile.TILE_SIZE);
             tiles = new Tile[CHUNK_SIZE][];
 
             for (int i = 0; i < CHUNK_SIZE; i++) {
                 tiles[i] = new Tile[CHUNK_SIZE];
             }
+        }
 
-            tiles[0][0] = new Tile();
+        public void SetTile(TileType type, int x ,int y) {
+            tiles[x][y] = new Tile(type);
+            tiles[x][y].Position = new Vector2f(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
         }
 
         public void Draw(RenderTarget target, RenderStates states) {

@@ -38,7 +38,8 @@ namespace MyTerraria {
         }
 
         private static void Win_Resized(object sender, SFML.Window.SizeEventArgs e) {
-            win.SetView(new View(new FloatRect(0, 0, e.Width, e.Height)));
+            if (win != null)
+                win.SetView(new View(new FloatRect(0, 0, e.Width, e.Height)));
         }
 
         private static void Win_Closed(object sender, EventArgs e) {

@@ -37,7 +37,13 @@ namespace MyTerraria {
                     reactShape.Texture = Content.textTile1; // ЗЕМЕЛЬНЫЙ БЛОК С ТРАВОЙ 
                     break;
             }
-            reactShape.TextureRect = new IntRect(0, 0, TILE_SIZE, TILE_SIZE);
+            reactShape.TextureRect = GetTextureRect(1, 1);
+        }
+
+        public IntRect GetTextureRect(int i, int j) {
+            int x = i * TILE_SIZE + i * 2;
+            int y = j * TILE_SIZE + j * 2;
+            return new IntRect(x, y, TILE_SIZE, TILE_SIZE);
         }
 
         public void Draw(RenderTarget target, RenderStates states) {

@@ -10,11 +10,14 @@ namespace MyTerraria {
 
         public Game() {
             world = new World();
+            world.GenerateWorld();
         }
 
+        // Обновление логики игры
         public void Update() {
         }
 
+        // Прорисовка игры
         public void Draw() {
             Program.Window.Draw(world);
         }

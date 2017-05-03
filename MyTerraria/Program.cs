@@ -11,6 +11,7 @@ namespace MyTerraria {
 
         public static RenderWindow Window { get { return win; } }
         public static Game Game { private set; get; }
+        public static Random Rand { private set; get; }
 
         static void Main(string[] args) {
             win = new RenderWindow(new SFML.Window.VideoMode(800, 600), "Моя Terraria!");
@@ -22,6 +23,7 @@ namespace MyTerraria {
             //Загрузка контента
             Content.Load();
 
+            Rand = new Random();
             Game = new Game();
 
             while (win.IsOpen) {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MyTerraria {
     enum TileType {
         NONE, //Пусто
-        GROUND ,//Почва
+        GROUND,//Почва
         GRASS // трава
     }
 
@@ -27,27 +27,82 @@ namespace MyTerraria {
         Tile leftTile = null;// левый сосед 
         Tile rightTile = null;//правый сосед
 
+        public Tile UpTile
+        {
+            set
+            {
+                upTile = value;
+                UpdateView();
+            }
+            get
+            {
+                return upTile;
+            }
+        }
+
+        public Tile DownTile
+        {
+            get
+            {
+                return downTile;
+            }
+
+            set
+            {
+                downTile = value;
+                UpdateView();
+            }
+        }
+
+        public Tile LeftTile
+        {
+            get
+            {
+                return leftTile;
+            }
+
+            set
+            {
+                leftTile = value;
+                UpdateView();
+            }
+        }
+
+        public Tile RightTile
+        {
+            get
+            {
+                return rightTile;
+            }
+
+            set
+            {
+                rightTile = value;
+                UpdateView();
+            }
+        }
+
         public Tile(TileType _type, Tile upTile, Tile downTile, Tile leftTile, Tile rightTile) {
             this.type = _type;
 
+            reactShape = new RectangleShape(new Vector2f(TILE_SIZE, TILE_SIZE));
+
             if (upTile != null) {
-                this.upTile = upTile;
-                this.upTile.downTile = this; //для верхнего соседа плитка будет нижним соседом
+                UpTile = upTile;
+                UpTile.DownTile = this; //для верхнего соседа плитка будет нижним соседом
             }
             if (downTile != null) {
-                this.downTile = downTile;
-                this.downTile.upTile = this; //для нижнего соседа плитка будет верхним соседом
+                DownTile = downTile;
+                DownTile.UpTile = this; //для нижнего соседа плитка будет верхним соседом
             }
             if (leftTile != null) {
-                this.leftTile = leftTile;
-                this.leftTile.rightTile = this; //для левого соседа плитка будет правым соседом
+                LeftTile = leftTile;
+                LeftTile.RightTile = this; //для левого соседа плитка будет правым соседом
             }
             if (rightTile != null) {
-                this.rightTile = rightTile;
-                this.rightTile.leftTile = this; //для правого соседа плитка будет левым соседом
+                RightTile = rightTile;
+                RightTile.LeftTile = this; //для правого соседа плитка будет левым соседом
             }
-
-            reactShape = new RectangleShape(new Vector2f(TILE_SIZE, TILE_SIZE));
 
             switch (type) {
                 case TileType.NONE:
@@ -60,15 +115,47 @@ namespace MyTerraria {
                     reactShape.Texture = Content.textTile1; // ЗЕМЕЛЬНЫЙ БЛОК С ТРАВОЙ 
                     break;
             }
-            reactShape.TextureRect = GetTextureRect(1, 1);
-
             UpdateView();
-
         }
 
         // Обновляем внешний вид плитки в зависимости от соседей
         public void UpdateView() {
-            
+            if (UpTile != null && DownTile != null && LeftTile != null && RightTile != null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(1 + i, 1);
+            } else if (UpTile == null && DownTile == null && LeftTile == null && RightTile == null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(9 + i, 3);
+            }
+            //-------------
+
+            else if (UpTile == null && DownTile != null && LeftTile != null && RightTile != null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(1 + i, 0);
+            } else if (UpTile != null && DownTile == null && LeftTile != null && RightTile != null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(1 + i, 2);
+            } else if (UpTile != null && DownTile != null && LeftTile == null && RightTile != null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(0, i);
+            } else if (UpTile != null && DownTile != null && LeftTile != null && RightTile == null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(4, i);
+            }
+            //--------------------
+            else if (UpTile == null && DownTile != null && LeftTile == null && RightTile != null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(i * 2, 3);
+            } else if (UpTile == null && DownTile != null && LeftTile != null && RightTile == null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(1 + i * 2, 3);
+            } else if (UpTile != null && DownTile == null && LeftTile == null && RightTile != null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(0 + i * 2, 4);
+            } else if (UpTile != null && DownTile == null && LeftTile != null && RightTile == null) {
+                int i = Program.Rand.Next(0, 3);
+                reactShape.TextureRect = GetTextureRect(1 + i * 2, 4);
+            }
         }
 
         public IntRect GetTextureRect(int i, int j) {

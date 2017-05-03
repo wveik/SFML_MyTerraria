@@ -46,7 +46,10 @@ namespace MyTerraria {
             updatePhysics(); // обновление физики
             updateMovement(); // обновление перемещения
 
-            Position += velocity;
+            Position += movement + velocity;
+
+            if (Position.Y > Program.Window.Size.Y || Position.X > Program.Window.Size.X || Position.X <= 0)
+                Spawn();
         }
 
         private void updatePhysics() {
@@ -63,6 +66,8 @@ namespace MyTerraria {
                 FloatRect playerRect = new FloatRect(nextPos, rect.Size);
                 FloatRect tileRect = new FloatRect(tile.Position, new Vector2f(Tile.TILE_SIZE, Tile.TILE_SIZE));
 
+                DebugRender.AddRectangle(tileRect, Color.Red);
+
                 isFall = !playerRect.Intersects(tileRect);
             }
 
@@ -78,21 +83,30 @@ namespace MyTerraria {
             bool isMoveRight = Keyboard.IsKeyPressed(Keyboard.Key.D);
             if(!isMoveRight)
                 isMoveRight = Keyboard.IsKeyPressed(Keyboard.Key.Right);
+
             bool isMove = isMoveLeft || isMoveRight;
 
             if (isMove) {
                 if (isMoveLeft) {
                     movement.X -= PLAYER_MOVE_ACCELERATION;
-                    this.Direction = -1;
+                    Direction = -1;
                 } else if (isMoveRight) {
                     movement.X += PLAYER_MOVE_ACCELERATION;
                     Direction = 1;
                 }
+
+                if (movement.X > PLAYER_MOVE_SPEED)
+                    movement.X = PLAYER_MOVE_SPEED;
+                else if(movement.X < -PLAYER_MOVE_SPEED)
+                    movement.X = -PLAYER_MOVE_SPEED;
+            } else {
+                movement = new Vector2f();
             }
         }
 
         public void Spawn() {
             Position = this.StartPosition;
+            velocity = new Vector2f();
         }
 
         public void Draw(RenderTarget target, RenderStates states) {

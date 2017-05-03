@@ -29,7 +29,7 @@ namespace MyTerraria {
         // установить плитку в чанке
         public void SetTile(TileType type, int x, int y, Tile upTile, Tile downTile, Tile leftTile, Tile rightTile) {
             tiles[x][y] = new Tile(type, upTile, downTile, leftTile, rightTile);
-            tiles[x][y].Position = new Vector2f(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
+            tiles[x][y].Position = new Vector2f(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE) + Position;
         }
 
         //Получить плитку из чанка
@@ -44,15 +44,13 @@ namespace MyTerraria {
 
         // рисуем чанк и его содержимое
         public void Draw(RenderTarget target, RenderStates states) {
-
-            states.Transform *= Transform;
-
+            
             //Рисуем тайлы
             for (int x = 0; x < CHUNK_SIZE; x++) {
                 for (int y = 0; y < CHUNK_SIZE; y++) {
                     if (tiles[x][y] == null) continue;
 
-                    target.Draw(tiles[x][y], states);
+                    target.Draw(tiles[x][y]);
                 }
             }
         }

@@ -19,6 +19,8 @@ namespace MyTerraria {
             player = new Player(world);
             player.StartPosition = new Vector2f(300 , 150);
             player.Spawn();
+
+            DebugRender.Enabled = true;
         }
 
         // Обновление логики игры
@@ -30,6 +32,8 @@ namespace MyTerraria {
         public void Draw() {
             Program.Window.Draw(world); // рисуем мир
             Program.Window.Draw(player); // рисуем игрока
+
+            DebugRender.Draw(Program.Window); // рисуем объекты для визуальной отладки
         }
     }
 }

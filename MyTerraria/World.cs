@@ -12,7 +12,7 @@ namespace MyTerraria {
         public const int WORLD_SIZE = 5;
 
         //Чанки
-        Chunk[][] chunks;
+        private Chunk[][] chunks;
 
         public World() {
             chunks = new Chunk[WORLD_SIZE][];
@@ -24,10 +24,15 @@ namespace MyTerraria {
 
         //Генерируем новый мир
         public void GenerateWorld() {
-            // генерируем мир из 3х3 земляной плитки
-            for (int x = 2; x < 10; x++) {
-                for (int y = 2; y < 7; y++) {
+            for (int x = 0; x < 50; x++) {
+                for (int y = 17; y <= 17; y++) {
                     SetTile(TileType.GRASS, x, y);
+                }
+            }
+
+            for (int x = 0; x < 50; x++) {
+                for (int y = 18; y <= 32; y++) {
+                    SetTile(TileType.GROUND, x, y);
                 }
             }
         }

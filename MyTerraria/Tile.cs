@@ -18,14 +18,14 @@ namespace MyTerraria {
         //Размер тайла по ширине и высоте
         public const int TILE_SIZE = 16;
 
-        TileType type = TileType.GROUND;
-        RectangleShape reactShape;
+        private TileType type = TileType.GROUND;
+        private RectangleShape reactShape;
 
         //Соседи
-        Tile upTile = null; //верхний сосед
-        Tile downTile = null;//нижний сосед
-        Tile leftTile = null;// левый сосед 
-        Tile rightTile = null;//правый сосед
+        private Tile upTile = null; //верхний сосед
+        private Tile downTile = null;//нижний сосед
+        private Tile leftTile = null;// левый сосед 
+        private Tile rightTile = null;//правый сосед
 
         public Tile UpTile
         {
